@@ -117,6 +117,65 @@ urlpatterns = [
     path("about/", AboutPageView.as_view()),
     path("", HomePageView.as_view()),
 ]
+```
 
+## Проблема - отстуствие навигации.
+Создадим родительский шаблон, который будет обладать информацией про
+существующие в приложении страницы. Для этого создадим шаблон ```base.html```:
+```
+<!--templates.base.html-->
+<header>
+    <a href="">Home</a> 
+    |
+    <a href="">About</a>
+</header>
 
+{% block content %}
+{% endblock content %}
+
+```
+
+Синтаксис {% ... %} - специфический синтаксис встроенного шаблонизатора ```Jinja2```. Перепишем дочерний шаблон ```home.html```:
+```
+<!-- templates/home.html ЭТО КОММЕНАТРИЙ-->
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>My Homepage</h1>
+{% endblock content %}
+```
+А также ```about.html```:
+```
+<!--templates/about.html-->
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>About page</h1>
+{% endblock content%}
+```
+## Для решения проблемы динамической линковки добавим url-ники
+В ```pages/urls.py``` введем имена для каждого запроса:
+```
+from django.urls import path 
+
+from .views import HomePageView, AboutPageView
+
+urlpatterns = [
+    path("about/", AboutPageView.as_view(), name='about'),
+    path("", HomePageView.as_view(), name='home'),
+]
+```
+
+А теперь воспользуемся никами в базовом шаблоне:
+```
+<!--templates.base.html-->
+<header>
+    <a href="{% url 'home' %}">Home</a> 
+    |
+    <a href="{% url 'about' %}">About</a>
+</header>
+
+{% block content %}
+{% endblock content %}
+```
 
