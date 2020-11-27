@@ -1,5 +1,6 @@
-from django.views.generic import ListView, DetailView, CreateView, UpdateView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from .models import Post
+from django.urls import reverse_lazy
 # Create your views here.
 
 class PostListView(ListView):
@@ -37,3 +38,12 @@ class PostUpdateView(UpdateView):
     model = Post 
     template_name = 'update_post.html'
     fields = ["title", "content"] # Не хотим , чтобы юзер мог поменять автора поста, а title и content - ок!
+
+class PostDeleteView(DeleteView):
+    """
+    Класс для отображения веб-формы удаления поста.
+    Для корректного отображения требуется указание модели, шаблона, КУДА перенаправлять после удаления
+    """
+    model = Post 
+    template_name = 'delete_post.html'
+    success_url = reverse_lazy("home") # Редирект выполняется ПОСЛЕ нажатия на кнопку `submit`. Обычный reverse() выполнился бы ДО.

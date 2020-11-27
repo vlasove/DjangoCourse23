@@ -14,5 +14,11 @@
         </p>
     </div>
     <!--Это добавление кнопки с перенаправлением на страничку обновления содержимого-->
-    <a href="{% url 'update_post' post.pk %}">+ Update</a>
+    <p>
+        <a href="{% url 'update_post' post.pk %}">+ Update</a>
+    </p>
+    <p>
+        <a href="{% url 'delete_post' post.pk %}">- Delete</a>
+    </p>
+    
 {% endblock content %}

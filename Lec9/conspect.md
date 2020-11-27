@@ -170,3 +170,80 @@ class PostUpdateView(UpdateView):
     <a href="{% url 'update_post' post.pk %}">+ Update</a>
 {% endblock content %}
 ```
+
+### Шаг 5. Создадим форму для Удаления Поста
+* В шаблоне ```templates/detail_post.html``` добавим кнопку с переадресацией на удаление.
+```
+<!--templates/detail_post.html-->
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="post-entry">
+        <h2>
+            {{post.title}}
+        </h2>
+        <h3>
+            By : {{post.author}}
+        </h3>
+        <p>
+            {{post.content}}
+        </p>
+    </div>
+    <!--Это добавление кнопки с перенаправлением на страничку обновления содержимого-->
+    <p>
+        <a href="{% url 'update_post' post.pk %}">+ Update</a>
+    </p>
+    <p>
+        <a href="{% url 'delete_post' post.pk %}">- Delete</a>
+    </p>
+    
+{% endblock content %}
+```
+
+* Создадим шаблон для удаления поста ```templates/delete_post.html```:
+```
+<!--templates/delete_post.html-->
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Форма для удаления поста</h1>
+    <form method="post" action ="">
+        {% csrf_token %}
+        <p>
+            Вы уверены, что хотите удалить этот пост?
+        </p>
+        <input type="submit" value="Delete Post"/>
+    </form>
+{% endblock content %}
+```
+
+* Создадим отображение ```PostDeleteView``` в файле ```simpleblog/views.py```:
+```
+from django.urls import reverse_lazy
+
+class PostDeleteView(DeleteView):
+    """
+    Класс для отображения веб-формы удаления поста.
+    Для корректного отображения требуется указание модели, шаблона, КУДА перенаправлять после удаления
+    """
+    model = Post 
+    template_name = 'delete_post.html'
+    success_url = reverse_lazy("home") # Редирект выполняется ПОСЛЕ нажатия на кнопку `submit`. Обычный reverse() выполнился бы ДО.
+```
+
+* Добавим вызов отображения в ```simpleblog/urls.py```:
+```
+from django.urls import path 
+
+from .views import PostListView, PostDetailView, PostCreateView, PostUpdateView, PostDeleteView
+
+urlpatterns = [
+    path("post/<int:pk>/delete/", PostDeleteView.as_view(), name="delete_post"),  # форма для удаления поста
+    path("post/<int:pk>/update/", PostUpdateView.as_view(), name = 'update_post'), # view для отображения формы update
+
+
+    path('post/create/', PostCreateView.as_view(), name = 'create_post'), # Добавляем view для отображения формы создания Поста
+    path("post/<int:pk>/", PostDetailView.as_view(), name="detail_post"), #post/1 pk == id из модели 
+    path("", PostListView.as_view(), name="home"),
+]
+```

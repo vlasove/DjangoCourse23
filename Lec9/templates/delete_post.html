@@ -1,0 +1,13 @@
+<!--templates/delete_post.html-->
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Форма для удаления поста</h1>
+    <form method="post" action ="">
+        {% csrf_token %}
+        <p>
+            Вы уверены, что хотите удалить этот пост?
+        </p>
+        <input type="submit" value="Delete Post"/>
+    </form>
+{% endblock content %}
