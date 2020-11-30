@@ -1,0 +1,11 @@
+<!--templates/ышптгз.html-->
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>Страница для регистрации</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p}}
+        <button type="submit">Зарегестрироваться</button>
+    </form>
+{% endblock content %}
