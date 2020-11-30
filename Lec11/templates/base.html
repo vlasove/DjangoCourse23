@@ -1,0 +1,42 @@
+<!--templates/base.html-->
+{% load static %}
+<html>
+    <head>
+        <title>My MicroBlog app</title>
+        <link href="{% static 'css/base.css' %}" rel="stylesheet">
+    </head>
+    <body>
+        <header>
+            <div class="nav-left">
+                <h1>
+                    <a href="{% url 'home' %}">Home to Blog</a>
+                </h1>
+            </div>
+
+            <div class="nav-right">
+                <!--Need to add post_creation_view to href-->
+                    <a href="{% url 'create_post' %}">+ Create New Post</a>
+            </div>
+            
+        </header>
+
+        {% if user.is_authenticated %}
+        <!-- Если пользователь залогинен, будем писать "Current user: username"-->
+            <p>Current user {{user.username}}</p>
+            <p>
+                <a href="{% url 'logout' %}">Log Out</a>
+            </p>
+        {% else %}
+        <!-- Если пользователь не залогинен будем писать "You are not logged. Log In"-->
+            <p>
+                You are not logged. <a href="{% url 'login' %}">+ Log In Now</a> or <a href = "{% url 'signup'%}"> + Sign Up Now</a>
+            </p>
+        {% endif %}
+
+
+        <div>
+            {% block content %}
+            {% endblock content %}
+        </div>
+    </body>
+</html>
