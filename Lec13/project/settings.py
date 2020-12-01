@@ -34,6 +34,9 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'users.apps.UsersConfig', # Регистрация приложения Users
     'pages.apps.PagesConfig', # Регистрация приложения Pages
+
+    'crispy_forms', # адаптер форм для Bootstrap
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -129,3 +132,5 @@ AUTH_USER_MODEL = 'users.MyUser'
 LOGIN_REDIRECT_URL = 'home'
 # Куда перенаправлять после Log Out
 LOGOUT_REDIRECT_URL = 'home'
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'

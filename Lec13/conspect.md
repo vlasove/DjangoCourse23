@@ -138,3 +138,70 @@ crossorigin="anonymous"></script>
 </body>
 </html>
 ```
+
+
+### Шаг 2.1 Стилизация кнопок
+Сейчас у нас перенесен стиль только для шапки и шрифтов. Но кнопки на страницах ```Login``` ```SignUp``` очень страшные.
+Исправим эту ситуацию.
+* Заходим в ```templates/registration/login.html``` и в коде кнопки пропишем:
+```
+<button class="btn btn-success ml-2" type=...
+```
+Аналогично поступим с ```signup.html```.
+
+### Шаг 3. Стилизация веб-форм
+Для того, чтобы стилизовать формы на странице необходим адаптер, который будет конвертировать стандартное отображение веб-формы в отображение ```Bootstrap-WebForm```.
+* Для получения этого адаптера необходимо выполнить ```pipenv install django-crispy-forms```
+* Теперь необходимо сообщить проекту, что вы собираетесь использовать этот адаптер для отображения форм (```3RD party software```)
+* Заходим в ```settings.py``` -> ```ISTALLED_APPS``` -> ```crispy_forms```
+* В самом низу также добавим ```CRISPY_TEMPLATE_PACK = 'bootstrap4'``` какую версию наборов стилей будем использовать.
+* Теперь сообщим всем шаблонам, что они будут использовать ассеты из ```crispy_form```.
+* ```templates/signup.html```:
+```
+<!--templates/signup.html-->
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %} <!--Сообщаем, что будем использовать необходимые crispy ассеты-->
+
+{% block content %}
+    <h2>Sign Up Page</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form|crispy }} <!--Теперь отображаем форму как указано в crispy-->
+        <button class="btn btn-success ml-2" type="submit">Sign Up</button>
+    </form>
+{% endblock content %}
+```
+* Тоже самое сделаем внутри ```teplates/registration/login.html```
+```
+<!--templates/registration/login.html-->
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <h2>Login Page</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <button class="btn btn-success ml-2" type="submit">Login</button>
+    </form>
+{% endblock content %}
+```
+
+### Шаг 4. Механизмы сброса пароля. Начало.
+Стандартный механизм сброса пароля уже реализован в приложении ```django.contrib.auth```. Но нас не устраивают стандартные шаблоны отображений.
+Перепишем эти шаблоны. Сейчас создадим набор шаблонов:
+```
+templates/registration/password_change_form.html
+templates/registration/password_change_done.html
+```
+
+```
+<!--templates/registration/password_change_done.html-->
+{% extends 'base.html' %}
+```
+
+```
+<!--templates/registration/password_change_form-->
+{% extends 'base.html' %}
+```
