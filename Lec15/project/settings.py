@@ -34,6 +34,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'users.apps.UsersConfig', # Регистрация приложения Users
     'pages.apps.PagesConfig', # Регистрация приложения Pages
+    'posts.apps.PostsConfig', # Регистрация приложения Posts
 
     'crispy_forms', # адаптер форм для Bootstrap
 
@@ -111,7 +112,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = "Europe/Moscow"
 
 USE_I18N = True
 

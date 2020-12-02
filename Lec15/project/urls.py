@@ -20,5 +20,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path("users/", include("users.urls")), # для передачи управления SignUp
     path("users/", include("django.contrib.auth.urls")), # Для реализации login/logout/passwordchange/passwordreset
+    path("posts/", include("posts.urls")), # Передача управления приложению Posts
     path("", include("pages.urls")) # HomePage будет работать в связке с приложением pages
 ]
