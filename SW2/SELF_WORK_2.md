@@ -50,7 +50,7 @@ class Item(models.Model):
 Реализовать функционал ***CrUD*** для оборота товаров:
 ```
 /items/ - доступ к списку всех товаров в сервисе (все товары всех магазинов, список)
-/items/new/ - создание нового магазина (LoginRequired ссылка)
+/items/new/ - создание нового товара (LoginRequired ссылка)
 /items/<int:pk>/detail/ - детальный обзор товара (LoginRequired ссылка)
 /items/<int:pk>/edit/ - редактирование товара (LoginRequired ссылка)
 /items/<int:pk>/delete/ - удаление товара (LoginRequired ссылка)
