@@ -1,0 +1,13 @@
+<!--templates/signup.html-->
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %} <!--Сообщаем, что будем использовать необходимые crispy ассеты-->
+
+{% block content %}
+    <h2>Sign Up Page</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form|crispy }} <!--Теперь отображаем форму как указано в crispy-->
+        <button class="btn btn-success ml-2" type="submit">Sign Up</button>
+    </form>
+{% endblock content %}
